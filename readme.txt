@@ -1,0 +1,2 @@
+main.py是运用pandas库进行数据整理和分析
+整理的数据文件夹中 是分析的click、cart、fav与buy之间关系
