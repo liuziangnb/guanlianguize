@@ -77,16 +77,49 @@ def getRecommendByRule(data):
 
 			#当前问题：PANDAS不知道如何实现多条件——特别是e['click']>3等
 			# R.append((uid, 11080))
-			if   e['diff_day']<10 and e['click']>3  :
+			# if   e['diff_day']<10 and e['click']>1 and e['buy']>0 and e['click']<11  :
+			# 	R.append((uid,bid))
+			# if  e['diff_day']<20 and e['click']>3 and e['click']<7 and e['buy']>0  :
+			# 	R.append((uid,bid))
+			# if  e['diff_day']<30 and e['click']>1  and e['click']<14 and e['buy']>0  :
+			# 	R.append((uid,bid))
+			# if  e['diff_day']<10 and e['fav']>1 and e['fav']<16 and e['buy']>0 :
+			#  	R.append((uid, bid))
+			# if  e['diff_day']<20 and e['fav']>1 and e['fav']<12 and e['buy']>0 :
+			#  	R.append((uid, bid))
+			# if  e['diff_day']<30 and e['fav']>2 and e['fav']<28 and e['buy']>0 :
+			#  	R.append((uid, bid))
+			# if  e['diff_day']<10 and e['cart']>1 and e['cart']<10 and e['buy']>0 :
+			#  	R.append((uid, bid))
+			# if e['diff_day']<20 and e['cart']>1 and e['cart']<12 and e['buy']>0:
+			# 	R.append((uid, bid))
+			# if e['diff_day']<30 and e['cart']>1 and e['cart']<19 and e['buy']>0:
+			# 	R.append((uid, bid))
+			if   e['diff_day']<8 and e['click']>3  :
+				R.append((uid,bid))
+			if e['diff_day']<10 and e['click']>1 and e['click']<4 and e['buy']>0:
 				R.append((uid,bid))
 
 			if   e['diff_day']<20 and (e['cart']>1 or e['buy']>0) :
 				R.append((uid, bid))
 
-			if   e['diff_day']<30 and (e['fav']>3 or e['buy']>2) :
+			if   e['diff_day']<30 and (e['fav']>1 or e['buy']>2) :
 				R.append((uid, bid))
-			if e['click']> :
-				R.append((uid,bid))
+
+
+			if  e['diff_day']<40 and e['click'] > 20:
+				R.append((uid, bid))
+
+			# if e['diff_day']<10 and e['cart']>1 and e['cart']<10 and e['buy']>0:
+			# 	R.append((uid,bid))
+
+			# if   e['diff_day']<20 and (e['cart']>1 or e['buy']>0) :
+			# 	R.append((uid, bid))
+			#
+			# if   e['diff_day']<30 and (e['fav']>3 or e['buy']>2) :
+			# 	R.append((uid, bid))
+			# if e['click']> :
+			# 	R.append((uid,bid))
 
 	# if   e['diff_day']<20 and e['buy']>3  :
 	# 	R.append((uid, bid))

@@ -32,14 +32,14 @@ data['lasttime']=lasttime
 
 data4=data   #data4有datetime
 
-data4.to_csv(r'D:\new_data_.csv')
+# data4.to_csv(r'D:\预处理的数据.csv')
 # print(data4)
 #------------------------------------------------------
-#lasttime<20 + click 的时候，click/buy的转化率
-# most_user_pv=data4[(data4['type']==0)&(data4['lasttime']<20)].groupby('user_id').count()['item']
+# lasttime<20 + click 的时候，click/buy的转化率
+# most_user_pv=data4[(data4['type']==0)&(data4['lasttime']<40)].groupby('user_id').count()['item']
 # most_user_pv=most_user_pv.sort_values(ascending=False)
 #
-# most_user_buy=data4[(data4['type']==1)&(data4['lasttime']<20)].groupby('user_id').count()['item']
+# most_user_buy=data4[(data4['type']==1)&(data4['lasttime']<40)].groupby('user_id').count()['item']
 # most_user_buy=most_user_buy.sort_values(ascending=False)
 #
 # user_cart_buy=pd.DataFrame(most_user_pv)
@@ -52,11 +52,18 @@ data4.to_csv(r'D:\new_data_.csv')
 # user_cart_buy['pv']=user_cart_buy['buy']+user_cart_buy['pv']
 # user_cart_buy['buy-pv']=user_cart_buy['buy']/user_cart_buy['pv']
 # user_cart_buy=user_cart_buy.sort_values(by='buy-pv',ascending=False)
-# user_cart_buy.to_csv(r'D:\userpvbuy-20days.csv')
+# user_cart_buy.to_csv(r'D:\userpvbuy-40days.csv')
 # print(user_cart_buy)
 #----------------------------------------------------------------------------------
-
-
+#查看数据的type行为
+# zero=data4[data4['type']==0].count()['item']
+# one=data4[data4['type']==1].count()['item']
+# two=data4[data4['type']==2].count()['item']
+# three=data4[data4['type']==3].count()['item']
+# print(zero)
+# print(one)
+# print(two)
+# print(three)
 #------------------------------------------------------------------------------------------
 #整体表格 处理 看整体转化率  <20 day
 # most_user_pv=data4[(data4['type']==0)&(data4['lasttime']<20)].groupby('user_id').count()['item']
@@ -105,6 +112,7 @@ data4.to_csv(r'D:\new_data_.csv')
 #----------------------------------------------------------------
 # 每日活跃量
 # DAU=data4.groupby('datetime').count()['user_id']
+# DAU.to_csv(r'D:\每日活跃量.csv')
 # print(DAU)
 #-------------------------------------------------------------
 #网页浏览量
@@ -199,6 +207,7 @@ data4.to_csv(r'D:\new_data_.csv')
 #         a=0
 #     labels.append(a)
 # user_cart_py['usertype']=labels
+# user_cart_py.to_csv(r'D:\点击与购物车关系.csv')
 # print(user_cart_py)
 #--------------------------------------------------------------------------
 #购物车——购买转化率
@@ -264,61 +273,61 @@ data4.to_csv(r'D:\new_data_.csv')
 # print(user_cart_buy)
 #--------------------------------------------------------------------------------
 #筛选buy>=1，自己调节吧
-#
-# most_user_buy=data4[data4['type']==1].groupby('user_id').count()['item']
-# most_user_buy=most_user_buy.sort_values(ascending=False);,lm
-#
-# item_buy1=most_user_buy[most_user_buy>=1]
-# item_buy1=pd.DataFrame(item_buy1)
-# item_buy1.columns=['buy1']
-# item_buy1=item_buy1.reset_index('user_id')
-#
+
+most_user_buy=data4[data4['type']==1].groupby('user_id').count()['item']
+most_user_buy=most_user_buy.sort_values(ascending=False);,lm
+
+item_buy1=most_user_buy[most_user_buy>=1]
+item_buy1=pd.DataFrame(item_buy1)
+item_buy1.columns=['buy1']
+item_buy1=item_buy1.reset_index('user_id')
+
 # 进行格式转换成形成购买清单
-# for i in item_buy1['user_id']:
-#     if i==item_buy1['user_id'][0]:
-#         a=data4[data4['user_id']==i]
-#         b=a[a['type']==1]
-#         c=b['item']
-#         d=pd.DataFrame(c)
-#         d.columns=[i]
-#         d.reset_index(drop=True,inplace=True)
-#         d=d.T
-#         user_item_buy=d
-#     else:
-#         a=data4[data4['user_id']==i]
-#         b=a[a['type']==1]
-#         c=b['item']
-#         d=pd.DataFrame(c)
-#         d.columns=[i]
-#         d.reset_index(drop=True,inplace=True)
-#         d=d.T
-#         user_item_buy=pd.concat([user_item_buy,d])
-# user_item_buy_new=user_item_buy.reset_index()
-# print(user_item_buy_new)
-#
-# #转换成哑变量矩阵
-# for i in range(len(user_item_buy)):
-#     if i==0:
-#         a = user_item_buy.iloc[i,:]
-#         b = pd.DataFrame(a)
-#         b=b.dropna()
-#         b.columns=['item']
-#         b[i]=1
-#         b.set_index('item', inplace=True)
-#         b=b.T
-#         b.to_csv(r'd:\da.csv')
-#         user_buy_matrix=pd.read_csv(r'd:\da.csv',index_col=0)
-#     else:
-#         a = user_item_buy.iloc[i,:]
-#         b = pd.DataFrame(a)
-#         b=b.dropna()
-#         b.columns=['item']
-#         b[i]=1
-#         b.set_index('item', inplace=True)
-#         b=b.T
-#         b.to_csv(r'd:\da.csv')
-#         aa = pd.read_csv(r'd:\da.csv',index_col=0)
-#         user_buy_matrix=pd.concat([user_buy_matrix,aa])
-# # 将缺失值填补为0
-# user_buy_matrix=user_buy_matrix.fillna(0)
-# user_buy_matrix.to_csv(r'D:\matrix.csv')
+for i in item_buy1['user_id']:
+    if i==item_buy1['user_id'][0]:
+        a=data4[data4['user_id']==i]
+        b=a[a['type']==1]
+        c=b['item']
+        d=pd.DataFrame(c)
+        d.columns=[i]
+        d.reset_index(drop=True,inplace=True)
+        d=d.T
+        user_item_buy=d
+    else:
+        a=data4[data4['user_id']==i]
+        b=a[a['type']==1]
+        c=b['item']
+        d=pd.DataFrame(c)
+        d.columns=[i]
+        d.reset_index(drop=True,inplace=True)
+        d=d.T
+        user_item_buy=pd.concat([user_item_buy,d])
+user_item_buy_new=user_item_buy.reset_index()
+print(user_item_buy_new)
+
+#转换成哑变量矩阵
+for i in range(len(user_item_buy)):
+    if i==0:
+        a = user_item_buy.iloc[i,:]
+        b = pd.DataFrame(a)
+        b=b.dropna()
+        b.columns=['item']
+        b[i]=1
+        b.set_index('item', inplace=True)
+        b=b.T
+        b.to_csv(r'd:\da.csv')
+        user_buy_matrix=pd.read_csv(r'd:\da.csv',index_col=0)
+    else:
+        a = user_item_buy.iloc[i,:]
+        b = pd.DataFrame(a)
+        b=b.dropna()
+        b.columns=['item']
+        b[i]=1
+        b.set_index('item', inplace=True)
+        b=b.T
+        b.to_csv(r'd:\da.csv')
+        aa = pd.read_csv(r'd:\da.csv',index_col=0)
+        user_buy_matrix=pd.concat([user_buy_matrix,aa])
+# 将缺失值填补为0
+user_buy_matrix=user_buy_matrix.fillna(0)
+user_buy_matrix.to_csv(r'D:\matrix.csv')
